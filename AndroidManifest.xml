@@ -156,6 +156,17 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".callstats.CallStatsDetailActivity"
+            android:label="@string/callStatsDetailTitle"
+            android:theme="@style/CallDetailActivityTheme"
+            android:screenOrientation="portrait"
+            android:icon="@mipmap/ic_launcher_phone" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="com.android.contacts.common.test.FragmentTestActivity">
             <intent-filter>
                 <category android:name="android.intent.category.TEST"/>
@@ -274,6 +285,36 @@
                   android:configChanges="keyboardHidden"
                   android:exported="false"
                   android:process="com.android.incallui">
+        </activity>
+
+        <activity android:name="com.android.incallui.InCallCardActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                  android:label="@string/phoneAppLabel"
+                  android:excludeFromRecents="true"
+                  android:launchMode="singleInstance"
+                  android:configChanges="keyboardHidden"
+                  android:exported="false"
+                  android:process="com.android.incallui">
+        </activity>
+
+        <activity
+            android:name=".preference.IPCallPreferenceActivity"
+            android:label="@string/dialer_ipcall_title"
+            android:theme="@style/SettingsLight" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".preference.SpeedDialPreferenceActivity"
+            android:label="@string/speeddial_title"
+            android:theme="@style/SettingsLight" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <service android:name="com.android.incallui.CallHandlerService"
