@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The MoKee OpenSource Project
+<!--
+     Copyright (C) 2012-2013 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,9 +14,21 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceScreen
-            android:key="ipcall_prefix"
-            android:title="@string/dialer_ip_call_prefix_title"/>
-</PreferenceScreen>
+<resources>
+  <plurals name="hour">
+    <item quantity="one">שעה %d</item>
+    <item quantity="other">%d שעות</item>
+  </plurals>
+  <plurals name="minute">
+    <item quantity="one">דקה %d</item>
+    <item quantity="other">%d דקות</item>
+  </plurals>
+  <plurals name="second">
+    <item quantity="one">שנייה %d</item>
+    <item quantity="other">%d שניות</item>
+  </plurals>
+  <plurals name="call">
+    <item quantity="one">שיחה %d</item>
+    <item quantity="other">%d שיחות</item>
+  </plurals>
+</resources>
