@@ -15,6 +15,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:sharedUserId="com.android.dialer"
     package="com.android.dialer">
 
     <uses-permission android:name="android.permission.CALL_PRIVILEGED" />
@@ -287,36 +288,6 @@
                   android:process="com.android.incallui">
         </activity>
 
-        <activity android:name="com.android.incallui.InCallCardActivity"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
-                  android:label="@string/phoneAppLabel"
-                  android:excludeFromRecents="true"
-                  android:launchMode="singleInstance"
-                  android:configChanges="keyboardHidden"
-                  android:exported="false"
-                  android:process="com.android.incallui">
-        </activity>
-
-        <activity
-            android:name=".preference.IPCallPreferenceActivity"
-            android:label="@string/dialer_ipcall_title"
-            android:theme="@style/SettingsLight" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".preference.SpeedDialPreferenceActivity"
-            android:label="@string/speeddial_title"
-            android:theme="@style/SettingsLight" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
         <service android:name="com.android.incallui.CallHandlerService"
                  android:process="com.android.incallui"
                  android:permission="android.permission.BIND_CALL_SERVICE">
@@ -331,6 +302,8 @@
                   android:process="com.android.incallui">
             <intent-filter>
                 <action android:name="com.android.incallui.ACTION_HANG_UP_ONGOING_CALL" />
+                <action android:name="com.android.incallui.ACTION_DISMISS_ICOMING_CALL" />
+                <action android:name="com.android.incallui.ACTION_ANSWER_ICOMING_CALL" />
             </intent-filter>
         </receiver>
 
