@@ -11,6 +11,7 @@ res_dirs := res $(contacts_common_dir)/res $(incallui_dir)/res
 
 LOCAL_SRC_FILES := $(call all-java-files-under, $(src_dirs))
 LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dirs))
+LOCAL_ASSET_DIR := $(LOCAL_PATH)/assets
 
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
@@ -19,6 +20,7 @@ LOCAL_AAPT_FLAGS := \
 
 LOCAL_JAVA_LIBRARIES := telephony-common
 LOCAL_STATIC_JAVA_LIBRARIES := \
+    pinyin \
     com.android.phone.shared \
     com.android.services.telephony.common \
     com.android.vcard \
@@ -40,3 +42,9 @@ include $(BUILD_PACKAGE)
 
 # Use the following include to make our test apk.
 include $(call all-makefiles-under,$(LOCAL_PATH))
+##################################################
+include $(CLEAR_VARS)
+
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := pinyin:libs/pinyin.jar
+
+include $(BUILD_MULTI_PREBUILT)
