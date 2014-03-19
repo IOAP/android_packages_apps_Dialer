@@ -54,6 +54,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -290,6 +292,7 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         mFirstLaunch = true;
 
@@ -297,8 +300,6 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
         fixIntent(intent);
 
         setContentView(R.layout.dialtacts_activity);
-
-        getActionBar().hide();
 
         // Add the favorites fragment, and the dialpad fragment, but only if savedInstanceState
         // is null. Otherwise the fragment manager takes care of recreating these fragments.
@@ -462,7 +463,6 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
                     final Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                     startActivityForResult(voiceIntent, ACTIVITY_REQUEST_CODE_VOICE_SEARCH);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(DialtactsActivity.this, R.string.toast_no_google_search, Toast.LENGTH_SHORT).show();
                     Log.w(TAG, e.toString());
                 }
                 break;
