@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
- * Copyright (C) 2013 The MoKee OpenSource Project
  * Copyright (C) 2013 Android Open Kang Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,16 +29,14 @@ public final class CallStatsDetailViews {
     public final TextView labelView;
     public final TextView percentView;
     public final LinearColorBar barView;
-    public final TextView locationView;
 
     private CallStatsDetailViews(TextView nameView, TextView numberView,
-            TextView labelView, TextView percentView, LinearColorBar barView, TextView locationView) {
+            TextView labelView, TextView percentView, LinearColorBar barView) {
         this.nameView = nameView;
         this.numberView = numberView;
         this.labelView = labelView;
         this.percentView = percentView;
         this.barView = barView;
-        this.locationView = locationView;
     }
 
     public static CallStatsDetailViews fromView(View view) {
@@ -48,7 +45,6 @@ public final class CallStatsDetailViews {
                 (TextView) view.findViewById(R.id.number),
                 (TextView) view.findViewById(R.id.label),
                 (TextView) view.findViewById(R.id.percent),
-                (LinearColorBar) view.findViewById(R.id.percent_bar),
-                (TextView) view.findViewById(R.id.location));
+                (LinearColorBar) view.findViewById(R.id.percent_bar));
     }
 }

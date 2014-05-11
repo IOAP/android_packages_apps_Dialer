@@ -44,6 +44,8 @@
     <uses-permission android:name="com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL" />
     <uses-permission android:name="android.permission.ALLOW_ANY_CODEC_FOR_PLAYBACK" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="android.permission.READ_PHONE_BLACKLIST" />
+    <uses-permission android:name="android.permission.CHANGE_PHONE_BLACKLIST" />
     <!-- allow broadcasting secret code intents that reboot the phone -->
     <uses-permission android:name="android.permission.REBOOT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -51,13 +53,6 @@
      start requests, even if they happen immediately after the user
      presses home. -->
     <uses-permission android:name="android.permission.STOP_APP_SWITCHES" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="com.qti.permission.DIAG" />
-
-    <!-- Allow the Dialer to access accounts for lookup services -->
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:name="DialerApplication"
@@ -131,17 +126,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="CallLogSearchActivity"
-             android:label="@string/recentCallsIconLabel" >
-             <intent-filter>
-                 <action android:name="android.intent.action.SEARCH" />
-             </intent-filter>
-
-             <meta-data
-                 android:name="android.app.searchable"
-                 android:resource="@xml/calllog_searchable" />
-        </activity>
-
         <activity android:name="com.android.dialer.calllog.CallLogActivity"
             android:label="@string/call_log_activity_title"
             android:theme="@style/DialtactsThemeWithActionBarOverlay"
@@ -191,17 +175,6 @@
                 <category android:name="android.intent.category.TEST"/>
             </intent-filter>
         </activity>
-
-        <provider android:name=".calllog.CallLogSearchProvider"
-            android:authorities="com.android.dialer.calllog.calllogsearchprovider"
-            android:exported="true" >
-            <path-permission
-                android:pathPrefix="/search_suggest_query"
-                android:readPermission="android.permission.GLOBAL_SEARCH" />
-            <path-permission
-                android:pathPrefix="/search_suggest_shortcut"
-                android:readPermission="android.permission.GLOBAL_SEARCH" />
-        </provider>
 
         <!-- Backwards compatibility: "Phone" from Gingerbread and earlier -->
         <activity-alias android:name="DialtactsActivity"
@@ -317,46 +290,14 @@
                   android:process="com.android.incallui">
         </activity>
 
-        <activity android:name="com.android.incallui.MSimInCallActivity"
-                  android:theme="@style/Theme.InCallScreen"
+        <activity android:name="com.android.incallui.InCallCardActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
                   android:label="@string/phoneAppLabel"
                   android:excludeFromRecents="true"
                   android:launchMode="singleInstance"
-                  android:screenOrientation="nosensor"
                   android:configChanges="keyboardHidden"
                   android:exported="false"
                   android:process="com.android.incallui">
-        </activity>
-
-        <activity
-            android:name=".preference.IPCallPreferenceActivity"
-            android:label="@string/dialer_ipcall_title"
-            android:theme="@style/SettingsLight" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".preference.SpeedDialPreferenceActivity"
-            android:label="@string/speeddial_title"
-            android:theme="@style/SettingsLight" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name="com.android.incallui.InCallCardActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/phoneAppLabel"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:configChanges="keyboardHidden"
-            android:exported="false"
-            android:process="com.android.incallui">
         </activity>
 
         <service android:name="com.android.incallui.CallHandlerService"
@@ -373,16 +314,13 @@
                   android:process="com.android.incallui">
             <intent-filter>
                 <action android:name="com.android.incallui.ACTION_HANG_UP_ONGOING_CALL" />
+                <action android:name="com.android.incallui.ACTION_DISMISS_ICOMING_CALL" />
+                <action android:name="com.android.incallui.ACTION_ANSWER_ICOMING_CALL" />
             </intent-filter>
         </receiver>
 
-        <provider android:name="com.android.dialer.lookup.DialerProvider"
+        <provider android:name="com.android.dialer.lookup.LookupProvider"
                   android:authorities="com.android.dialer.provider"
-                  android:exported="false"
-                  android:multiprocess="false" />
-
-        <provider android:name="com.android.dialer.lookup.PhoneNumberCacheProvider"
-                  android:authorities="com.android.dialer.cacheprovider"
                   android:exported="false"
                   android:multiprocess="false" />
 

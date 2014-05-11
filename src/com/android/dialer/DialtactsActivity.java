@@ -1,7 +1,4 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
- *
  * Copyright (C) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,7 +37,6 @@ import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Intents;
 import android.provider.ContactsContract.Intents.UI;
 import android.speech.RecognizerIntent;
-import android.telephony.MSimTelephonyManager;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.Spannable;
@@ -54,6 +50,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -99,9 +97,6 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
     private static final String PHONE_PACKAGE = "com.android.phone";
     private static final String CALL_SETTINGS_CLASS_NAME =
             "com.android.phone.CallFeaturesSetting";
-    private static final String MSIM_CALL_SETTINGS_CLASS_NAME =
-            "com.android.phone.MSimCallFeaturesSetting";
-
     /** @see #getCallOrigin() */
     private static final String CALL_ORIGIN_DIALTACTS =
             "com.android.dialer.DialtactsActivity";
@@ -290,6 +285,7 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         mFirstLaunch = true;
 
@@ -297,8 +293,6 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
         fixIntent(intent);
 
         setContentView(R.layout.dialtacts_activity);
-
-        getActionBar().hide();
 
         // Add the favorites fragment, and the dialpad fragment, but only if savedInstanceState
         // is null. Otherwise the fragment manager takes care of recreating these fragments.
@@ -458,13 +452,8 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
                 }
                 break;
             case R.id.voice_search_button:
-                try {
-                    final Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    startActivityForResult(voiceIntent, ACTIVITY_REQUEST_CODE_VOICE_SEARCH);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(DialtactsActivity.this, R.string.toast_no_google_search, Toast.LENGTH_SHORT).show();
-                    Log.w(TAG, e.toString());
-                }
+                final Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                startActivityForResult(voiceIntent, ACTIVITY_REQUEST_CODE_VOICE_SEARCH);
                 break;
             default: {
                 Log.wtf(TAG, "Unexpected onClick event from " + view);
@@ -891,11 +880,7 @@ public class DialtactsActivity extends TransactionSafeActivity implements View.O
     /** Returns an Intent to launch Call Settings screen */
     public static Intent getCallSettingsIntent() {
         final Intent intent = new Intent(Intent.ACTION_MAIN);
-        if (MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
-            intent.setClassName(PHONE_PACKAGE, MSIM_CALL_SETTINGS_CLASS_NAME);
-        } else {
-            intent.setClassName(PHONE_PACKAGE, CALL_SETTINGS_CLASS_NAME);
-        }
+        intent.setClassName(PHONE_PACKAGE, CALL_SETTINGS_CLASS_NAME);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
